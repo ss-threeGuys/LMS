@@ -7,7 +7,7 @@ router.get('/', function (req, res) {
     .then((data) => {
       res.json(data)
     }).catch(err => {
-      console.errror(err);
+      console.error(err);
     })
 });
 

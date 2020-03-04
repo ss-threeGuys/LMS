@@ -10,5 +10,5 @@ app.use("/admin", controllers);
 app.listen(3000);
 console.log("server running on port 3000");
 
-mongoose.connect("mongodb://localhost/library");
+mongoose.connect("mongodb+srv://admin:admin@cluster0-xarex.mongodb.net/test?retryWrites=true&w=majority");
 
