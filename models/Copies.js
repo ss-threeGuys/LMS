@@ -1,13 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const loanSchema = new Schema({
+const copiesSchema = new Schema({
     bookId : {type : Schema.Types.ObjectId, ref : 'Book', required : true},
     branchId : {type : Schema.Types.ObjectId, ref : 'Branch', required : true},
-    borrowerId : {type : Schema.Types.ObjectId, ref : 'Borrower', required : true},
-    dueDate : Date,
-    dateIn : Date,
-    dateOut : Date
+    noOfCopies : {type : Number, required : true}
 })
 
-module.exports = mongoose.model('Loan', loanSchema)
+module.exports = mongoose.model('Copies', copiesSchema)
