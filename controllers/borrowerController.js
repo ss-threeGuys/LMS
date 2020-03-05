@@ -8,11 +8,7 @@ router.get("/", function(req, res) {
     .then(data => {
       res.json(data);
     })
-    .catch(err => {
-      res.status(500).json({
-        error: err
-      });
-    });
+    .catch(next)
 });
 
 router.post("/", function(req, res) {
@@ -27,11 +23,7 @@ router.post("/", function(req, res) {
   return borrowerService
     .createBorrower(branch)
     .then(data => res.json(data).status(201))
-    .catch(err => {
-      res.status(500).json({
-        error: err
-      });
-    });
+    .catch(next)
 });
 
 router.put("/", function(req, res) {
@@ -47,11 +39,7 @@ router.put("/", function(req, res) {
   return borrowerService
     .updateBorrower(branch)
     .then(res.sendStatus(204))
-    .catch(err => {
-      res.status(500).json({
-        error: err
-      });
-    });
+    .catch(next)
 });
 
 router.delete("/:id", function(req, res) {
@@ -60,11 +48,7 @@ router.delete("/:id", function(req, res) {
   return borrowerService
     .deleteBorrower(id)
     .then(res.sendStatus(204))
-    .catch(err => {
-      res.status(500).json({
-        error: err
-      });
-    });
+    .catch(next)
 });
 
 module.exports = router;
