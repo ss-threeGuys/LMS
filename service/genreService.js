@@ -1,6 +1,6 @@
 'use strict';
 const mongoose = require('mongoose');
-const Service = require('Service');
+const Service = require('./Service');
 const genre = require('../models/Genre');
 
 class GenreService extends Service {
@@ -18,4 +18,4 @@ class GenreService extends Service {
 
 }
 
-module.exports = GenreService.instance;
+module.exports = GenreService._instance;

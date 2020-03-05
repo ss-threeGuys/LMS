@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express'); 
-const Controller = require('Controller');
+const Controller = require('./Controller');
 const genreService = require('../service/genreService');
 
 class GenreController extends Controller {
@@ -23,4 +23,4 @@ class GenreController extends Controller {
 };
 
 
-module.exports = (GenreController.instance).getRouter();
+module.exports = (GenreController._instance).getRouter();

@@ -1,6 +1,6 @@
 'use strict';
 const mongoose = require('mongoose');
-const Service = require('Service');
+const Service = require('./Service');
 const publisher = require('../models/Publisher');
 
 class PublisherService extends Service {
@@ -18,4 +18,4 @@ class PublisherService extends Service {
 
 }
 
-module.exports = PublisherService.instance;
+module.exports = PublisherService._instance;

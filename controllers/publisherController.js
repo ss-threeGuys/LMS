@@ -1,7 +1,7 @@
 'use strict';
 
 const express = require('express'); 
-const Controller = require('Controller');
+const Controller = require('./Controller');
 const publisherService = require('../service/publisherService');
 
 class PublisherController extends Controller {
@@ -23,4 +23,4 @@ class PublisherController extends Controller {
 };
 
 
-module.exports = (PublisherController.instance).getRouter();
+module.exports = (PublisherController._instance).getRouter();
