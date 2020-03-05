@@ -6,21 +6,14 @@ const genreService = require('../service/genreService');
 
 class GenreController extends Controller {
 
-    // Singleton pattern
-    static _instance = new GenreController(genreService);
 
     constructor(service) {
       super(service);
     }
 
-    get instance() {
-      return _instance;
-    }
-
-  
-    
-
+   
 };
 
+const genreController = new GenreController(genreService);
 
-module.exports = (GenreController._instance).getRouter();
+module.exports = genreController.getRouter();

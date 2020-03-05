@@ -6,21 +6,18 @@ const publisherService = require('../service/publisherService');
 
 class PublisherController extends Controller {
 
-    // Singleton pattern
-    static _instance = new PublisherController(publisherService);
+
 
     constructor(service) {
       super(service);
     }
 
-    get instance() {
-      return _instance;
-    }
+  
 
   
     
 
 };
+const publisherController = new PublisherController(publisherService);
 
-
-module.exports = (PublisherController._instance).getRouter();
+module.exports = publisherController.getRouter();

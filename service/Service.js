@@ -9,7 +9,13 @@ class Service {
     }
 
     findAll() {
-        return this.db.find();
+        try {
+            return this.db.find();
+        } 
+        catch(e) {
+            console.log(e);
+        }
+
     }
     
     findById(id) {
