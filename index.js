@@ -22,5 +22,5 @@ app.use((err, req, res, next) => {
     res.status(500).json(err);
 });
 
-mongoose.connect("mongodb://localhost/library");
+mongoose.connect("mongodb+srv://user:user@cluster0-xarex.mongodb.net/library?retryWrites=true&w=majority", { useNewUrlParser: true , useUnifiedTopology: true } );
 
