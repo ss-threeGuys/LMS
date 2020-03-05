@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const borrowerService = require("../service/borrowerService");
 
-router.get("/", function(req, res) {
+router.get("/", function(req, res, next) {
   borrowerService
     .findAllBorrowers()
     .then(data => {
@@ -11,7 +11,7 @@ router.get("/", function(req, res) {
     .catch(next)
 });
 
-router.post("/", function(req, res) {
+router.post("/", function(req, res, next) {
   if (!req.body.name || req.body.name.length < 2) {
 
     branchFormat = {name: "name(length > 2)" }
@@ -26,7 +26,7 @@ router.post("/", function(req, res) {
     .catch(next)
 });
 
-router.put("/", function(req, res) {
+router.put("/", function(req, res, next) {
   if (!req.body.name || req.body.name.length < 2) {
     return res.sendStatus(400);
   }
@@ -42,7 +42,7 @@ router.put("/", function(req, res) {
     .catch(next)
 });
 
-router.delete("/:id", function(req, res) {
+router.delete("/:id", function(req, res, next) {
   id = req.params.id;
 
   return borrowerService
