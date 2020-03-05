@@ -18,7 +18,7 @@ router.get("/", function(req, res) {
 router.post("/", function(req, res) {
   if (!req.body.branchName || req.body.branchName.length < 2) {
 
-    branchFormat = {branchName: "branchName(length > 2)" }
+    branchFormat = {branchName: "branchName (required and length > 2)" }
     return res.status(400).json(branchFormat);
   }
 

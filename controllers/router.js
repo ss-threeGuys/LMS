@@ -11,7 +11,7 @@ const publisher = require('./publisherController');
 
 router.use('/author', author);
 router.use('/book', book);
-router.use('/borrower', borrower);
+router.use('/borrowers', borrower);
 router.use('/branches', branch);
 router.use('/genre', genre);
 router.use('/publisher', publisher);
