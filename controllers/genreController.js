@@ -1,8 +1,26 @@
+'use strict';
+
 const express = require('express'); 
-const router = express.Router(); 
+const Controller = require('Controller');
+const genreService = require('../service/genreService');
 
-router.get('/',function(req,res){
-  res.send("hello");
-});
+class GenreController extends Controller {
 
-module.exports = router;
+    // Singleton pattern
+    static _instance = new GenreController(genreService);
+
+    constructor(service) {
+      super(service);
+    }
+
+    get instance() {
+      return _instance;
+    }
+
+  
+    
+
+};
+
+
+module.exports = (GenreController.instance).getRouter();

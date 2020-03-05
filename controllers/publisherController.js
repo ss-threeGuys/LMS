@@ -1,10 +1,26 @@
+'use strict';
+
 const express = require('express'); 
-const router = express.Router(); 
+const Controller = require('Controller');
 const publisherService = require('../service/publisherService');
 
-router.get('/',function(req,res){
-  res.send(publisherService.findAllPublishers());
-  if (err) throw err;
-});
+class PublisherController extends Controller {
 
-module.exports = router;
+    // Singleton pattern
+    static _instance = new PublisherController(publisherService);
+
+    constructor(service) {
+      super(service);
+    }
+
+    get instance() {
+      return _instance;
+    }
+
+  
+    
+
+};
+
+
+module.exports = (PublisherController.instance).getRouter();
