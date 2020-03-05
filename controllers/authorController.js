@@ -9,6 +9,7 @@ router.get('/', function (req, res, next) {
     }).catch(next)
   });
 
+
 router.post('/', function (req, res, next) {
   if (!req.body.name || req.body.name.length < 2) {
     return res.status(400).json({"message" : "invalid input - name must be at least 2 characters"});
