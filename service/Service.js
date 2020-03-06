@@ -31,7 +31,7 @@ class Service {
     }
     
     delete(id) {
-        return Author.findByIdAndDelete(id);
+        return this.db.findByIdAndDelete(id);
     }
 
 }

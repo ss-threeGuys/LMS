@@ -15,7 +15,7 @@ class Controller  {
        // Use Builder 1st
 
       this._service.create(req.body)
-          .then(data => res.json(data).status(201))
+          .then(data => res).status(201).json(data)
           .catch(e=>this.exceptionHandler(e, next));
     }
 
@@ -40,7 +40,7 @@ class Controller  {
         //Builder
 
       this._service.create(req.body)
-      .then(data => res.json(data).status(204))
+      .then(data => res.status(204).json(data))
       .catch(e=>this.exceptionHandler(e, next));
     }
 
