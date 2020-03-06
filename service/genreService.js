@@ -5,17 +5,12 @@ const genre = require('../models/Genre');
 
 class GenreService extends Service {
 
-    static _instance  = new GenreService(genre);
-
     constructor (db) {
         super(db);
     }
 
-    // Singleton
-    get instance() {
-        return _instance;
-    }
-
 }
 
-module.exports = GenreService._instance;
+const genreService = new GenreService(genre);
+
+module.exports = genreService;
