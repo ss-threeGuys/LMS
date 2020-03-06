@@ -1,11 +1,17 @@
 'use strict';
+const mongoose = require('mongoose');
+const Service = require('./Service');
+const publisher = require('../models/Publisher');
 
-const Publisher = require('../models/Publisher')
+class PublisherService extends Service {
 
-function findAllPublishers() {
-   
+    constructor (db) {
+        super(db);
+    }
+
+
 }
 
-module.exports = {findAllPublishers};
 
-
+const publisherService = new PublisherService(publisher);
+module.exports = publisherService;

@@ -1,8 +1,19 @@
+'use strict';
+
 const express = require('express'); 
-const router = express.Router(); 
+const Controller = require('./Controller');
+const genreService = require('../service/genreService');
 
-router.get('/',function(req,res){
-  res.send("hello");
-});
+class GenreController extends Controller {
 
-module.exports = router;
+
+    constructor(service) {
+      super(service);
+    }
+
+   
+};
+
+const genreController = new GenreController(genreService);
+
+module.exports = genreController.getRouter();

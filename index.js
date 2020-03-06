@@ -4,15 +4,16 @@ const mongoose = require('mongoose');
 const controllers = require('./controllers/router.js');
 
 const app = express();
+debugger;
 app.use(express.json());
 app.use("/admin", controllers);
 
 app.listen(3000);
-console.log("server running on port 3000");
+console.log("Server running on port 3000");
 
 
 app.use((err, req, res, next) => {
-
+    console.error(err.stack);
     if (res.headersSent) {
         return next(err)
     }
