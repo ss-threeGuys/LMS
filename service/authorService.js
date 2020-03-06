@@ -14,8 +14,8 @@ function updateAuthor(author) {
 }
 
 function deleteAuthor(id) {
-    Author.findByIdAndDelete(id);
-
+    return Author.findByIdAndDelete(id);
+}
 
 
 module.exports = { findAllAuthors, createAuthor, updateAuthor, deleteAuthor };
