@@ -14,8 +14,19 @@ function updateAuthor(author) {
 }
 
 function deleteAuthor(id) {
-    return Author.findByIdAndDelete(id)
+    Author.findById(id)
+    .then(author=> {
+        Book.find((book, {authors : authors.filter(author => author !== id)})
+            .then(data => console.log(data))
+        )}
+    )
 }
+
+        
+
+
+    
+    // Author.findByIdAndDelete(id);
 
 
 
