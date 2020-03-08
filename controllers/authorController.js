@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const authorService = require('../service/authorService')
+const authorService = require('../service/authorService');
 
 router.get('/', function (req, res, next) {
   authorService.findAllAuthors()
@@ -9,14 +9,16 @@ router.get('/', function (req, res, next) {
     }).catch(next)
   });
 
-
 router.post('/', function (req, res, next) {
   if (!req.body.name || req.body.name.length < 2) {
     return res.status(400).json({"message" : "invalid input - name must be at least 2 characters"});
   }
   author = req.body;
+
+
+  
   return authorService.createAuthor(author)
-    .then(data => res.json(data).status(201))
+    .then(data => res.status(201).json(data))
     .catch(next);
 })
 
