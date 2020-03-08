@@ -26,7 +26,7 @@ router.post("/", function(req, res, next) {
     .catch(next)
 });
 
-router.put("/", function(req, res, next) {
+router.put("/:id", function(req, res, next) {
   if (!req.body.branchName || req.body.branchName.length < 2) {
     return res.sendStatus(400);
   }
