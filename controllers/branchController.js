@@ -30,14 +30,11 @@ router.put("/", function(req, res, next) {
   if (!req.body.branchName || req.body.branchName.length < 2) {
     return res.sendStatus(400);
   }
-  if (!req.body._id) {
-    return res.sendStatus(400);
-  }
-
+  id = req.params.id;
   branch = req.body;
 
   return branchService
-    .updateBranch(branch)
+    .updateBranch(id,branch)
     .then(res.sendStatus(204))
     .catch(next)
 });
