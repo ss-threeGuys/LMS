@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 // Build the connection string 
-const dbURI = 'mongodb+srv://use:user@cluster0-xarex.mongodb.net/library?retryWrites=true&w=majority'; 
+const dbURI = 'mongodb+srv://user:user@cluster0-xarex.mongodb.net/library?retryWrites=true&w=majority'; 
  
 // Create the database connection 
 mongoose.connect(dbURI, { useNewUrlParser: true , useUnifiedTopology: true })
