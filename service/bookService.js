@@ -14,6 +14,8 @@ function checkBookGenres(book) {
     return Promise.all(book.genres.map(id => Genre.exists({ "_id": id })));
 }
 
+//to-do: check book publisher
+
 function createBook(book) {
     if (!book.authors) {
         book.authors = [];
@@ -30,33 +32,19 @@ function createBook(book) {
             return checkBookGenres(book)
                 .then(genres => {
                     book.genres = book.genres.filter((genre, index) => genres[index]);
+                    
+                    //to-do: check publisher
+                    
                     return Book.create(book)
                 })
                 .then(book => {
-
-                    updateAuthorsAndGenres(book);
                     return book;
                 })
                 .catch(err => console.error(err))
         })
 }
 
-function updateAuthorsAndGenres(book) {
-   
-    let bookId = book._id;
-    if (book.authors.length) {
-        book.authors.forEach(author => {
 
-            Author.findByIdAndUpdate(author, { $push: { books: bookId } }, { new: true })
-                .then(author => console.log(author));
-        })
-    }
-    if (book.genres.length) {
-        book.genres.forEach(genre => {
-            Genre.findByIdAndUpdate(genre, { $push: { books: bookId } })
-        })
-    }
-}
 
 
 function updateBook(book) {
@@ -66,48 +54,15 @@ function updateBook(book) {
             return checkBookGenres(book)
                 .then(genres => {
                     book.genres = book.genres.filter((genre, index) => genres[index]);
+                    
+                    // to do: check publisher and update publisher
                     return Book.findByIdAndUpdate(book._id, { new: true }, { title: book.title }, { author: book.authors }, { genres: book.genres });
-                })
-                .then(book => updateAuthorsAndGenres(book)
-                ).catch(err => console.error(err))
+                }).catch(err => console.error(err))
         })
 }
 
 function deleteBook(id) {
-    return Book.findById(id)
-        .then(book => {
-            let bookAuthors = book.authors;
-            let bookGenres = book.genres;
-            let id = book._id
-            Book.findByIdAndDelete({ "_id": id })
-                .then(() => {
-
-                    return Promise.resolve({ id, bookAuthors, bookGenres });
-                })
-                .then(() => {
-
-                    deleteBookFromAuthors(id, bookAuthors)
-                    deleteBookFromGenres(id, bookGenres)
-                })
-
-
-        })
-
+    return Book.findByIdAndDelete({ "_id": id });
 }
-
-function deleteBookFromAuthors(bookId, authors) {
-    authors.forEach(author => {
-        Author.findByIdAndUpdate(author, { $pull: { books: bookId } }, { new: true })
-            .then(author => console.log(author));
-    })
-}
-
-function deleteBookFromGenres(bookId, genres) {
-    genres.forEach(genre => {
-        Genre.findByIdAndUpdate(genre, { $pull: { books: bookId } })
-    })
-}
-
-
 
 module.exports = { findAllBooks, createBook, updateBook, deleteBook };

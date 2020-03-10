@@ -14,6 +14,9 @@ function updateAuthor(author) {
 }
 
 function deleteAuthor(id) {
+    //to-do : delete author from books
+    //to-do : add transaction
+    
     return Author.findByIdAndDelete(id);
 }
 
