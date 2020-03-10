@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const borrowerService = require("../service/borrowerService");
 const utilities = require("../utilities/utilities");
+
 router.get("/", function(req, res, next) {
   borrowerService
     .findAllBorrowers()
