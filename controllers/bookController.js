@@ -29,11 +29,11 @@ router.post('/', function (req, res, next) {
 router.put('/', function (req, res, next) {
   console.log(req.body)
   if (!req.body.title || req.body.title.length < 2 || !req.body._id) {
-    return res.status(400).json({ "message": "invalid input - title must be at least 2 characters" });
+    return res.status(400).json({ "message": "invalid input - title must be at least 2 characters and must include an id to update" });
   }
 
   book = req.body;
-  console.log(author);
+
   return bookService.updateBook(book)
     .then(res.sendStatus(204))
     .catch(next)
