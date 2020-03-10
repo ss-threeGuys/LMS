@@ -1,4 +1,6 @@
+"use strict";
 const express = require("express");
+var convert = require("xml-js");
 const router = express.Router();
 const branchService = require("../service/branchService");
 
@@ -6,7 +8,17 @@ router.get("/", function(req, res, next) {
   branchService
     .findAllBranches()
     .then(data => {
-      res.json(data);
+      res.format({
+        "application/json": () => res.json(data),
+        "application/xml": () => {
+          const xml = convertJSONtoXML(JSON.stringify(data));
+          res.setHeader("Content-Type", "application/xml");
+          res.status(200);
+          res.send(xml);
+        },
+
+        default: () => res.status(406).send("Not Acceptable")
+      });
     })
     .catch(next);
 });
@@ -46,5 +58,14 @@ router.delete("/:id", function(req, res, next) {
     .then(res.sendStatus(204))
     .catch(next);
 });
+
+const convertJSONtoXML = json => {
+  const options = { compact: true, ignoreComment: true, spaces: 4 };
+  let xml = `<Branches> ${convert
+    .json2xml(json, options)
+    .replace(/\d>/g, "Branch>")} </Branches>`;
+
+  return xml;
+};
 
 module.exports = router;
