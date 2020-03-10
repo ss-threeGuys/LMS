@@ -1,20 +1,37 @@
-const mongoose = require('mongoose');
+
 const Book = require('../models/Book');
 const Author = require('../models/Author');
 const Genre = require('../models/Genre');
+const Publisher = require('../models/Publisher')
 
 function findAllBooks() {
     return Book.find();
 }
 
 function checkBookAuthors(book) {
-    return Promise.all(book.authors.map(id => Author.exists({ "_id": id })));
-}
-function checkBookGenres(book) {
-    return Promise.all(book.genres.map(id => Genre.exists({ "_id": id })));
+    if (book.authors) {
+        return Promise.all(book.authors.map(id => Author.exists({ "_id": id })));
+    } else {
+        return [];
+    }
+    
 }
 
-//to-do: check book publisher
+function checkBookGenres(book) {
+    if (book.genres) {
+        return Promise.all(book.genres.map(id => Genre.exists({ "_id": id })));
+    } else {
+        return []
+    }
+}
+
+function checkPublisher(book) {
+    if (book.publisher) {
+        return Promise.all(Publisher.exists({ "_id": book.publisher }));
+    } else {
+        return null;
+    }
+}
 
 function createBook(book) {
     if (!book.authors) {
@@ -24,41 +41,62 @@ function createBook(book) {
     if (!book.genres) {
         book.genres = [];
     }
-
-
+    
     return checkBookAuthors(book)
         .then(authors => {
-            book.authors = book.authors.filter((author, index) => authors[index]);
+            if (authors.length) {
+                book.authors = book.authors.filter((author, index) => authors[index]);
+            }
             return checkBookGenres(book)
-                .then(genres => {
-                    book.genres = book.genres.filter((genre, index) => genres[index]);
-                    
-                    //to-do: check publisher
-                    
-                    return Book.create(book)
-                })
-                .then(book => {
-                    return book;
-                })
-                .catch(err => console.error(err))
         })
+        .then(genres => {
+            if (genres.length) {
+                book.genres = book.genres.filter((genre, index) => genres[index]);
+            }
+
+            return checkPublisher(book)
+        })
+        .then(publisherExists => {
+            if (!publisherExists) {
+                book.publisher = null;
+            }
+            return Book.create(book)
+        })
+        .then(book => book)
+        .catch(err => console.error(err))
 }
 
-
-
-
 function updateBook(book) {
+    if (!book.authors) {
+        book.authors = [];
+    }
+
+    if (!book.genres) {
+        book.genres = [];
+    }
+    
     return checkBookAuthors(book)
         .then(authors => {
-            book.authors = book.authors.filter((author, index) => authors[index]);
+            if (authors.length) {
+                book.authors = book.authors.filter((author, index) => authors[index]);
+            }
+
             return checkBookGenres(book)
-                .then(genres => {
-                    book.genres = book.genres.filter((genre, index) => genres[index]);
-                    
-                    // to do: check publisher and update publisher
-                    return Book.findByIdAndUpdate(book._id, { new: true }, { title: book.title }, { author: book.authors }, { genres: book.genres });
-                }).catch(err => console.error(err))
         })
+        .then(genres => {
+            if (genres.length) {
+                book.genres = book.genres.filter((genre, index) => genres[index]);
+            }
+            return checkPublisher(book)
+        })
+        .then(publisherExists => {
+            if (!publisherExists) {
+                book.publisher = null;
+            }
+            console.log("in checkpublisher callback" + JSON.stringify(book));
+            return Book.findByIdAndUpdate(book._id, { title: book.title, authors: book.authors, genres: book.genres, publisher: book.publisher })
+        })
+        .catch(err => console.error(err))
 }
 
 function deleteBook(id) {
