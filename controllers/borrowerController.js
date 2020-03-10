@@ -26,18 +26,16 @@ router.post("/", function(req, res, next) {
     .catch(next)
 });
 
-router.put("/", function(req, res, next) {
+router.put("/:id", function(req, res, next) {
   if (!req.body.name || req.body.name.length < 2) {
     return res.sendStatus(400);
   }
-  if (!req.body._id) {
-    return res.sendStatus(400);
-  }
-
-  branch = req.body;
+  
+  id = req.params.id;
+  borrower = req.body;
 
   return borrowerService
-    .updateBorrower(branch)
+    .updateBorrower(id,borrower)
     .then(res.sendStatus(204))
     .catch(next)
 });
