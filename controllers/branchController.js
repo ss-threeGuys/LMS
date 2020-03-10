@@ -8,13 +8,12 @@ router.get("/", function(req, res, next) {
     .then(data => {
       res.json(data);
     })
-    .catch(next)
+    .catch(next);
 });
 
 router.post("/", function(req, res, next) {
   if (!req.body.branchName || req.body.branchName.length < 2) {
-
-    branchFormat = {branchName: "branchName (required and length > 2)" }
+    branchFormat = { branchName: "branchName (required and length > 2)" };
     return res.status(400).json(branchFormat);
   }
 
@@ -22,8 +21,8 @@ router.post("/", function(req, res, next) {
 
   return branchService
     .createBranch(branch)
-    .then(data => res.json(data).status(201))
-    .catch(next)
+    .then(data => res.status(201).json(data))
+    .catch(next);
 });
 
 router.put("/:id", function(req, res, next) {
@@ -34,9 +33,9 @@ router.put("/:id", function(req, res, next) {
   branch = req.body;
 
   return branchService
-    .updateBranch(id,branch)
+    .updateBranch(id, branch)
     .then(res.sendStatus(204))
-    .catch(next)
+    .catch(next);
 });
 
 router.delete("/:id", function(req, res, next) {
@@ -45,7 +44,7 @@ router.delete("/:id", function(req, res, next) {
   return branchService
     .deleteBranch(id)
     .then(res.sendStatus(204))
-    .catch(next)
+    .catch(next);
 });
 
 module.exports = router;

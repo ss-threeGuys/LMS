@@ -8,13 +8,12 @@ router.get("/", function(req, res, next) {
     .then(data => {
       res.json(data);
     })
-    .catch(next)
+    .catch(next);
 });
 
 router.post("/", function(req, res, next) {
   if (!req.body.name || req.body.name.length < 2) {
-
-    branchFormat = {name: "name(length > 2)" }
+    branchFormat = { name: "name(length > 2)" };
     return res.status(400).json(branchFormat);
   }
 
@@ -22,22 +21,22 @@ router.post("/", function(req, res, next) {
 
   return borrowerService
     .createBorrower(branch)
-    .then(data => res.json(data).status(201))
-    .catch(next)
+    .then(data => res.status(201).json(data))
+    .catch(next);
 });
 
 router.put("/:id", function(req, res, next) {
   if (!req.body.name || req.body.name.length < 2) {
     return res.sendStatus(400);
   }
-  
+
   id = req.params.id;
   borrower = req.body;
 
   return borrowerService
-    .updateBorrower(id,borrower)
+    .updateBorrower(id, borrower)
     .then(res.sendStatus(204))
-    .catch(next)
+    .catch(next);
 });
 
 router.delete("/:id", function(req, res, next) {
@@ -46,7 +45,7 @@ router.delete("/:id", function(req, res, next) {
   return borrowerService
     .deleteBorrower(id)
     .then(res.sendStatus(204))
-    .catch(next)
+    .catch(next);
 });
 
 module.exports = router;
