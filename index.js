@@ -1,5 +1,5 @@
 const express = require("express");
-
+var bodyParser = require("body-parser");
 const controllers = require("./controllers/router.js");
 const handleErrors = require("./exception-handler");
 
