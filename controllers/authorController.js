@@ -1,46 +1,83 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const authorService = require('../service/authorService');
+const authorService = require("../service/authorService");
+const utilities = require("../utilities/utilities");
 
-router.get('/', function (req, res, next) {
-  authorService.findAllAuthors()
-    .then((data) => {
-      res.json(data)
-    }).catch(next)
-  });
+router.get("/", function(req, res, next) {
+  authorService
+    .findAllAuthors()
+    .then(data => {
+      res.format({
+        "application/json": () => res.json(data),
+        "application/xml": () => {
+          const xml = utilities.convertJSONtoXML(
+            JSON.stringify(data),
+            "Author",
+            "Authors"
+          );
+          res.setHeader("Content-Type", "application/xml");
+          res.status(200);
+          res.send(xml);
+        },
 
-router.post('/', function (req, res, next) {
+        default: () => res.status(406).send("Not Acceptable")
+      });
+    })
+    .catch(next);
+});
+
+router.post("/", function(req, res, next) {
   if (!req.body.name || req.body.name.length < 2) {
-    return res.status(400).json({"message" : "invalid input - name must be at least 2 characters"});
+    return res
+      .status(400)
+      .json({ message: "invalid input - name must be at least 2 characters" });
   }
   author = req.body;
 
+  return authorService
+    .createAuthor(author)
+    .then(data => {
+      res.format({
+        "application/json": () => res.status(201).json(data),
+        "application/xml": () => {
+          const xml = utilities.convertJSONtoXML(
+            JSON.stringify(data),
+            "Author",
+            null
+          );
+          res.setHeader("Content-Type", "application/xml");
+          res.status(201);
+          res.send(xml);
+        },
 
-  
-  return authorService.createAuthor(author)
-    .then(data => res.status(201).json(data))
+        default: () => res.status(406).send("Not Acceptable")
+      });
+    })
     .catch(next);
-})
+});
 
-router.put('/', function (req, res, next) {
-  console.log(req.body)
+router.put("/", function(req, res, next) {
+  console.log(req.body);
   if (!req.body.name || req.body.name.length < 2 || !req.body._id) {
-    return res.status(400).json({"message" : "invalid input - name must be at least 2 characters"});
+    return res
+      .status(400)
+      .json({ message: "invalid input - name must be at least 2 characters" });
   }
-  
+
   author = req.body;
   console.log(author);
-  return authorService.updateAuthor(author)
-  .then(res.sendStatus(204))
-  .catch(next)
-})
+  return authorService
+    .updateAuthor(author)
+    .then(res.sendStatus(204))
+    .catch(next);
+});
 
-router.delete('/:id', function(req, res, next) {
+router.delete("/:id", function(req, res, next) {
   id = req.params.id;
-  return authorService.deleteAuthor(id)
-  .then(res.sendStatus(204))
-  .catch(next)
-
-})
+  return authorService
+    .deleteAuthor(id)
+    .then(res.sendStatus(204))
+    .catch(next);
+});
 
 module.exports = router;
