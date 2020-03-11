@@ -23,13 +23,13 @@ router.post('/', function (req, res, next) {
 })
 
 router.put('/', function (req, res, next) {
-  console.log(req.body)
+
   if (!req.body.name || req.body.name.length < 2 || !req.body._id) {
-    return res.status(400).json({"message" : "invalid input - name must be at least 2 characters"});
+    return res.status(400).json({"message" : "invalid input - name must be at least 2 characters and must have id"});
   }
   
   author = req.body;
-  console.log(author);
+ 
   return authorService.updateAuthor(author)
   .then(res.sendStatus(204))
   .catch(next)
