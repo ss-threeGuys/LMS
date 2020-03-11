@@ -1,11 +1,14 @@
 'use strict';
 
-const mongoose = require('mongoose');
+const DataAccess = require('../DataAccess/DataAccess');
 
 class Service {
-    
-    constructor (db) {
-        this.db = db;
+
+    constructor (db, CustomDataAccess) {
+        if ((CustomDataAccess === null)||(CustomDataAccess === undefined))
+            this.dataAccess = new DataAccess(db);
+        else
+            this.dataAccess = new CustomDataAccess(db);
 
         this.beforeCreateHandler = null;
         this.afterCreateHandler = null;
@@ -42,11 +45,11 @@ class Service {
     }
 
     findAll() {
-            return this.db.find();
+            return this.dataAccess.findAll();
     }
     
     findById(id) {
-        return this.db.findById(id);
+        return this.dataAccess.findById(id);
     }
 
 
@@ -56,11 +59,13 @@ class Service {
 
         if (this.beforeCreateHandler !== null)
             proceed = this.beforeCreateHandler(data);
-     
+        else
+            proceed = true;
+
         if (!proceed) 
             return null;
 
-        let result = this.db.create(data);
+        let result = this.dataAccess.create(data);
 
         if (this.afterCreateHandler !== null)
             this.afterCreateHandler(data, result);
@@ -74,11 +79,13 @@ class Service {
 
         if (this.beforeUpdateHandler !== null)
             proceed = this.beforeUpdateHandler(data);
+        else
+            proceed = true;
 
         if (!proceed) 
             return null;
 
-        let result = this.db.findByIdAndUpdate(this.data.id, data);
+        let result = this.dataAccess.update(data);
 
         if (this.afterUpdateHandler !== null)
             this.afterUpdateHandler(data, result);
@@ -93,11 +100,13 @@ class Service {
 
         if (this.beforeDeleteHandler !== null)
             proceed = this.beforeDeleteHandler(id);
+        else
+            proceed = true;
 
         if (!proceed) 
             return null;
     
-        let result = this.db.findByIdAndDelete(id);
+        let result = this.dataAccess.delete(id);
 
         if (this.afterDeleteHandler !== null)
             this.afterDeleteHandler(id, result);
