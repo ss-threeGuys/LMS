@@ -64,8 +64,8 @@ router.put("/:id", function(req, res, next) {
   if (!req.body.branchName || req.body.branchName.length < 2) {
     return res.sendStatus(400);
   }
-  id = req.params.id;
-  branch = req.body;
+  let id = req.params.id;
+  let branch = req.body;
 
   return branchService
     .updateBranch(id, branch)

@@ -61,8 +61,8 @@ router.put("/:id", function(req, res, next) {
     return res.sendStatus(400);
   }
 
-  id = req.params.id;
-  borrower = req.body;
+  let id = req.params.id;
+  let borrower = req.body;
 
   return borrowerService
     .updateBorrower(id, borrower)
