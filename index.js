@@ -1,29 +1,31 @@
-
 const express = require("express");
-const mongoose = require('mongoose');
-const controllers = require('./controllers/router.js');
+var bodyParser = require("body-parser");
+const controllers = require("./controllers/router.js");
+const handleErrors = require("./exception-handler");
+
+require("./db-mongoose");
 
 const app = express();
-debugger;
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  res.header("Access-Control-Allow-Methods","POST, GET, OPTIONS, PUT, DELETE");
+  next();
+});
+
 app.use(express.json());
 app.use("/admin", controllers);
 
 app.listen(3000);
 console.log("Server running on port 3000");
 
+app.use(handleErrors);
 
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    if (res.headersSent) {
-        return next(err)
-    }
-
-    if (err.status) {
-        return res.status(err.status).json(err);
-    }
-    res.status(500).json(err);
-});
-
-
-mongoose.connect("mongodb+srv://user:user@cluster0-xarex.mongodb.net/library?retryWrites=true&w=majority", { useNewUrlParser: true , useUnifiedTopology: true } );
-
+module.exports = app;
