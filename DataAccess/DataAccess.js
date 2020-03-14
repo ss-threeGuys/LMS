@@ -1,44 +1,37 @@
-'use strict';
+"use strict";
 
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 class DataAccess {
-    
-    constructor (db) {
-        this.db = db;
-    }
+  constructor(db) {
+    this.db = db;
+  }
 
-    findAll() {
-            return this.db.find();
-    }
-    
-    findById(id) {
-        return this.db.findById(id);
-    }
+  findAll() {
+    return this.db.find();
+  }
 
+  findById(id) {
+    return this.db.findById(id);
+  }
 
-    create(data) {
+  create(data) {
+    let result = this.db.create(data);
 
-        let result = this.db.create(data);
+    return result;
+  }
 
-        return result;
-    }
-    
-    update(data) {
+  update(data) {
+    let result = this.db.findByIdAndUpdate(data._id, data);
 
-        let result = this.db.findByIdAndUpdate(this.data.id, data);
+    return result;
+  }
 
-        return result;
+  delete(id) {
+    let result = this.db.findByIdAndDelete(id);
 
-    }
-    
-    delete(id) {
-    
-        let result = this.db.findByIdAndDelete(id);
-
-        return result;
-    }
-
+    return result;
+  }
 }
 
 module.exports = DataAccess;

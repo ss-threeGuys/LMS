@@ -34,9 +34,9 @@ class Controller {
 
   update(req, res, next) {
     //Builder
-
+    console.log(req.body);
     this._service
-      .create(req.body)
+      .update(req.body)
       .then(data => res.status(204).json(data))
       .catch(e => this.exceptionHandler(e, next));
   }
