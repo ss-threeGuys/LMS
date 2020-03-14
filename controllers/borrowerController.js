@@ -32,7 +32,7 @@ router.post("/", function(req, res, next) {
     return res.status(400).json(branchFormat);
   }
 
-  branch = req.body;
+  let branch = req.body;
 
   return borrowerService
     .createBorrower(branch)
@@ -74,7 +74,7 @@ router.put("/:id", function(req, res, next) {
 });
 
 router.delete("/:id", function(req, res, next) {
-  id = req.params.id;
+  let id = req.params.id;
 
   return borrowerService
     .deleteBorrower(id)

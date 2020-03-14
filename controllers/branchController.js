@@ -77,7 +77,7 @@ router.put("/:id", function(req, res, next) {
 });
 
 router.delete("/:id", function(req, res, next) {
-  id = req.params.id;
+  let id = req.params.id;
 
   return branchService
     .deleteBranch(id)
