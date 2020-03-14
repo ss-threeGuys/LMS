@@ -57,6 +57,9 @@ router.post("/", function(req, res, next) {
 });
 
 router.put("/:id", function(req, res, next) {
+  if (req.params.id !== req.body._id) {
+    return res.sendStatus(400);
+  }
   if (!req.body.name || req.body.name.length < 2) {
     return res.sendStatus(400);
   }
