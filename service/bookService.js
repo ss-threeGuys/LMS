@@ -5,7 +5,10 @@ const Genre = require('../models/Genre');
 const Publisher = require('../models/Publisher')
 
 function findAllBooks() {
-    return Book.find();
+    return Book.find()
+    .populate('authors')
+    .populate('genres')
+    .populate('publisher');
 }
 
 function checkBookAuthors(book) {
@@ -69,7 +72,7 @@ function createBook(book) {
                 })
                 .then(book => {
                     session.commitTransaction();
-                    return book;
+                    return book.populate('authors').populate('genres').populate('publisher').execPopulate();
                 })
                 .catch(err => {
                     session.abortTransaction();
@@ -118,7 +121,10 @@ function updateBook(book) {
                 .catch(err => {
                     session.abortTransaction();
                     throw err;
-                });
+                })
+                .finally(() => {
+                    session.endSession();
+                })
         })
 }
 
