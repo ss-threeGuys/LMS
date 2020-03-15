@@ -34,9 +34,11 @@ class Controller {
 
   update(req, res, next) {
     //Builder
-
+    if (req.params.id !== req.body._id) {
+      return res.sendStatus(400);
+    }
     this._service
-      .create(req.body)
+      .update(req.body)
       .then(data => res.status(204).json(data))
       .catch(e => this.exceptionHandler(e, next));
   }
@@ -61,7 +63,7 @@ class Controller {
     router.post("/", this.create.bind(this));
     router.get("/", this.getAll.bind(this));
     router.get("/:id", this.getById.bind(this));
-    router.put("/", this.update.bind(this));
+    router.put("/:id", this.update.bind(this));
     router.delete("/:id", this.deleteById.bind(this));
 
     return router;
