@@ -61,6 +61,9 @@ router.post("/", function(req, res, next) {
 });
 
 router.put("/:id", function(req, res, next) {
+  if (req.params.id !== req.body._id) {
+    return res.sendStatus(400);
+  }
   if (!req.body.branchName || req.body.branchName.length < 2) {
     return res.sendStatus(400);
   }
@@ -74,7 +77,7 @@ router.put("/:id", function(req, res, next) {
 });
 
 router.delete("/:id", function(req, res, next) {
-  id = req.params.id;
+  let id = req.params.id;
 
   return branchService
     .deleteBranch(id)
