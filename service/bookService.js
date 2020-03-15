@@ -121,7 +121,10 @@ function updateBook(book) {
                 .catch(err => {
                     session.abortTransaction();
                     throw err;
-                });
+                })
+                .finally(() => {
+                    session.endSession();
+                })
         })
 }
 
