@@ -74,7 +74,7 @@ router.put("/:id", function(req, res, next) {
 
   return bookService
     .updateBook(book)
-    .then(res.sendStatus(204))
+    .then(() => res.sendStatus(204))
     .catch(next);
 });
 

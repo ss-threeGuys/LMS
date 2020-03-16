@@ -78,6 +78,9 @@ function createBook(book) {
                     session.abortTransaction();
                     throw err;
                 })
+                .finally( () => {
+                    session.endSession();
+                })
         })
 }
 
