@@ -28,9 +28,9 @@ function checkBookGenres(book) {
     }
 }
 
-function checkPublisher(book) {
+async function checkPublisher(book) {
     if (book.publisher) {
-        return Promise.all(Publisher.exists({ "_id": book.publisher }));
+        return await Publisher.exists({ "_id": book.publisher });
     } else {
         return null;
     }
