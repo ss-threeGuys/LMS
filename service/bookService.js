@@ -4,6 +4,23 @@ const Author = require('../models/Author');
 const Genre = require('../models/Genre');
 const Publisher = require('../models/Publisher')
 
+const findPaginateDAO = require('../DataAccess/findPaginate');
+
+function findPaginate (sortField, sortOrder, currentPage, pageSize)  {
+    return findPaginateDAO(Book, sortField, sortOrder, currentPage, pageSize,
+                // .populate('authors')
+                // .populate('genres')
+                // .populate('publisher');
+                [ 'authors','genres','publisher' ]
+        );
+                
+    
+}
+
+function getModelName() {
+    return Book.collection.collectionName
+}
+
 function findAllBooks() {
     return Book.find()
      .populate('authors')
@@ -132,4 +149,4 @@ function deleteBook(id) {
     return Book.findByIdAndDelete({ "_id": id });
 }
 
-module.exports = { findAllBooks, createBook, updateBook, deleteBook };
+module.exports = { findPaginate, getModelName, findAllBooks, createBook, updateBook, deleteBook };
