@@ -47,6 +47,10 @@ class Service {
     findAll() {
             return this.dataAccess.findAll();
     }
+
+    findPaginate(sortField, sortOrder, currentPage, pageSize) {
+        return this.dataAccess.findPaginate(sortField, sortOrder, currentPage, pageSize);
+    }
     
     findById(id) {
         return this.dataAccess.findById(id);
