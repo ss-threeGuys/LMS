@@ -4,6 +4,10 @@ const express = require("express");
 const router = express.Router();
 const branchService = require("../service/branchService");
 const utilities = require("../utilities/utilities");
+const paginationPlugin = require("./paginateControlerPlugin");
+
+paginationPlugin(router, branchService);
+
 router.get("/", function(req, res, next) {
   branchService
     .findAllBranches()
@@ -84,5 +88,6 @@ router.delete("/:id", function(req, res, next) {
     .then(res.sendStatus(204))
     .catch(next);
 });
+
 
 module.exports = router;
