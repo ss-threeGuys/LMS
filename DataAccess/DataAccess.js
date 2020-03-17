@@ -11,6 +11,17 @@ class DataAccess {
     return this.db.find();
   }
 
+  
+  findPaginate(sortField, sortOrder, currentPage, pageSize) {
+    
+    let sort = {};
+
+    sort[sortField] = sortOrder;
+
+    return this.db.paginate({}, { page: currentPage, limit: pageSize, sort: sort });
+
+  }
+
   findById(id) {
     return this.db.findById(id);
   }
