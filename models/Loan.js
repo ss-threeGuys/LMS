@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 const Schema = mongoose.Schema;
 
 const loanSchema = new Schema({
@@ -10,4 +12,5 @@ const loanSchema = new Schema({
     dateOut : Date
 })
 
+loanSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('Loan', loanSchema)
