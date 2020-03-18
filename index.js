@@ -28,4 +28,13 @@ console.log("Server running on port 3000");
 
 app.use(handleErrors);
 
+/**
+ * Route not found handler
+ * 
+ * <p>Will return 404 on undefined route instead of 500<p>
+ */
+app.use(function (req, res, next) {
+  res.status(404).json({code: 404, message:"Sorry can't find that route!",route:req.path});
+})
+
 module.exports = app;

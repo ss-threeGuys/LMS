@@ -10,5 +10,4 @@ const publisherSchema = new Schema({
 })
 
 publisherSchema.plugin(mongoosePaginate);
-
 module.exports = mongoose.model('Publisher', publisherSchema);

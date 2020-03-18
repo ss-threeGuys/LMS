@@ -1,6 +1,13 @@
 
 const Borrower = require('../models/Borrower');
 
+const findPaginateDAO = require('../DataAccess/findPaginate');
+
+const findPaginate = (sortField, sortOrder, currentPage, pageSize)  =>
+            findPaginateDAO(Borrower, sortField, sortOrder, currentPage, pageSize);
+
+const getModelName = () => {return branch.collection.collectionName};
+
 const findAllBorrowers = () => Borrower.find();
 
 const createBorrower = (borrower) => Borrower.create(borrower);
@@ -9,4 +16,4 @@ const updateBorrower = (id, borrower) => Borrower.findByIdAndUpdate(id, {name : 
 
 const deleteBorrower = (id) => Borrower.findByIdAndDelete(id);
 
-module.exports = { findAllBorrowers, createBorrower, updateBorrower, deleteBorrower };
+module.exports = { findPaginate, getModelName, findAllBorrowers, createBorrower, updateBorrower, deleteBorrower };

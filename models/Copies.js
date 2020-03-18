@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 const Schema = mongoose.Schema;
 
 const copiesSchema = new Schema({
@@ -7,4 +9,5 @@ const copiesSchema = new Schema({
     noOfCopies : {type : Number, required : true}
 })
 
+copiesSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('Copies', copiesSchema)

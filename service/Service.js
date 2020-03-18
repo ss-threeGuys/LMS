@@ -18,6 +18,8 @@ class Service {
 
         this.beforeDeleteHandler = null;
         this.afterDeleteHandler = null;
+
+        this._modelName = db.collection.collectionName;
     }
 
     set onBeforeCreate(handler) {
@@ -44,12 +46,16 @@ class Service {
         this.afterDeleteHandler = handler;
     }
 
+    get modelName() {
+        return this._modelName;
+    }
+
     findAll() {
             return this.dataAccess.findAll();
     }
 
-    findPaginate(sortField, sortOrder, currentPage, pageSize) {
-        return this.dataAccess.findPaginate(sortField, sortOrder, currentPage, pageSize);
+    findPaginate(sortField, sortOrder, currentPage, pageSize, populate = []) {
+        return this.dataAccess.findPaginate(sortField, sortOrder, currentPage, pageSize, populate);
     }
     
     findById(id) {

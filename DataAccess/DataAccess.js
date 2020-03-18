@@ -12,13 +12,13 @@ class DataAccess {
   }
 
   
-  findPaginate(sortField, sortOrder, currentPage, pageSize) {
+  findPaginate(sortField, sortOrder, currentPage, pageSize, populate = []) {
     
     let sort = {};
 
     sort[sortField] = sortOrder;
 
-    return this.db.paginate({}, { page: currentPage, limit: pageSize, sort: sort });
+    return this.db.paginate({}, { page: currentPage, limit: pageSize, sort: sort, populate: populate });
 
   }
 

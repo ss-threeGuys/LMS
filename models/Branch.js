@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
+
 const Schema = mongoose.Schema;
 
 const branchSchema = new Schema({
@@ -6,4 +8,5 @@ const branchSchema = new Schema({
     branchAddress : String
 })
 
+branchSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('Branch', branchSchema);

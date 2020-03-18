@@ -2,6 +2,16 @@ const mongoose = require('mongoose');
 const Author = require('../models/Author');
 const Book = require('../models/Book')
 
+const findPaginateDAO = require('../DataAccess/findPaginate');
+
+function findPaginate (sortField, sortOrder, currentPage, pageSize)  {
+    return findPaginateDAO(Author, sortField, sortOrder, currentPage, pageSize);
+}
+
+function getModelName() {
+    return Author.collection.collectionName
+}
+
 function findAllAuthors() {
     return Author.find();
 }
@@ -30,4 +40,4 @@ const deleteAuthor = async (id) => {
     }
 }
 
-module.exports = { findAllAuthors, createAuthor, updateAuthor, deleteAuthor };
+module.exports = { findPaginate, getModelName, findAllAuthors, createAuthor, updateAuthor, deleteAuthor };

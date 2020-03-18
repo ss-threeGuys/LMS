@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const authorService = require("../service/authorService");
 const utilities = require("../utilities/utilities");
+const paginationPlugin = require("./paginateControlerPlugin");
+
+paginationPlugin(router, authorService);
 
 router.get("/", function(req, res, next) {
   authorService

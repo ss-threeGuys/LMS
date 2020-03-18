@@ -4,6 +4,8 @@ const express = require("express");
 
 const url = require("url");
 
+const utilities = require("../utilities/utilities");
+
 class Controller {
   constructor(service) {
     this._service = service;
@@ -47,13 +49,29 @@ class Controller {
                 count: data.totalDocs,
                 sortField: queryParams.sortField,
                 sortOrder: queryParams.sortOrder
-            };
-            res.setHeader('x-paging', JSON.stringify(paging));
+            }; 
+
+            res.format({
+              "application/json": () => res.json([...data.docs,{__paging:paging}]),
+              "application/xml": () => {
+                  res.setHeader("Content-Type", "application/xml");
+                  res.status(200);
+                  res.send(this.xml({row:data.docs, paging:paging}));
+                },
+            })
             
-            res.send([...data.docs,{__paging:paging}]);
+            
           })
       .catch(e => this.exceptionHandler(e, next));
   
+  }
+
+  xml(data) {
+    return utilities.convertJSONtoXML(
+      JSON.stringify(data),
+      "docs",
+      this._service.modelName
+    );
   }
 
   getById(req, res, next) {
