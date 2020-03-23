@@ -74,7 +74,7 @@ router.put("/:id", function(req, res, next) {
 
   return authorService
     .updateAuthor(author)
-    .then(res.sendStatus(204))
+    .then(() => res.sendStatus(204))
     .catch(next);
 });
 
@@ -82,7 +82,7 @@ router.delete("/:id", function(req, res, next) {
   id = req.params.id;
   return authorService
     .deleteAuthor(id)
-    .then(res.sendStatus(204))
+    .then(() => res.sendStatus(204))
     .catch(next);
 });
 
