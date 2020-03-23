@@ -76,7 +76,7 @@ router.put("/:id", function(req, res, next) {
 
   return branchService
     .updateBranch(id, branch)
-    .then(res.sendStatus(204))
+    .then(() => res.sendStatus(204))
     .catch(next);
 });
 
@@ -85,9 +85,8 @@ router.delete("/:id", function(req, res, next) {
 
   return branchService
     .deleteBranch(id)
-    .then(res.sendStatus(204))
+    .then(() => res.sendStatus(204))
     .catch(next);
 });
-
 
 module.exports = router;
