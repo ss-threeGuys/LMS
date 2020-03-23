@@ -85,7 +85,7 @@ router.delete("/:id", function(req, res, next) {
   id = req.params.id;
   return bookService
     .deleteBook(id)
-    .then(res.sendStatus(204))
+    .then(() => res.sendStatus(204))
     .catch(next);
 });
 
