@@ -34,7 +34,10 @@ app.use(handleErrors);
  * <p>Will return 404 on undefined route instead of 500<p>
  */
 app.use(function (req, res, next) {
-  res.status(404).json({code: 404, message:"Sorry can't find that route!",route:req.path});
+  if (req.path === '/health' || req.path === '/')
+    res.status(200).json({code: 200, message:"Healthy", timestamp:Date.now()});
+  else
+    res.status(404).json({code: 404, message:"Sorry can't find that route!",route:req.path});
 })
 
 module.exports = app;
